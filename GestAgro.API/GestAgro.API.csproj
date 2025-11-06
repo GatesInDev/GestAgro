@@ -24,8 +24,4 @@
     <ProjectReference Include="..\GestAgro.Domain\GestAgro.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>

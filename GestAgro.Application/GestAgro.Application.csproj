@@ -13,11 +13,6 @@
   <ItemGroup>
     <Folder Include="Common\Behaviors\" />
     <Folder Include="Common\Mappings\" />
-    <Folder Include="DTOs\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="libphonenumber-csharp" Version="9.0.15" />
   </ItemGroup>
 
 </Project>
