@@ -8,7 +8,11 @@
 
   <ItemGroup>
     <Folder Include="Events\" />
-    <Folder Include="Interfaces\" />
+    <Folder Include="ValueObjects\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="libphonenumber-csharp" Version="9.0.17" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
-﻿namespace GestAgro.Domain.Enums.PreRegistration
+﻿namespace GestAgro.Domain.Enums.EarlyRegister
 {
-    public enum PreRegistrationStatus
+    public enum EarlyRegisterStatus
     {
         Pending,
         Canceled,
