@@ -1,14 +1,11 @@
-﻿using GestAgro.Domain.Entities.EarlyRegister;
+﻿using GestAgro.Domain.Entities;
 using GestAgro.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace GestAgro.Infrastructure.Persistence.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-        {
-        }
         public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,22 +23,33 @@ namespace GestAgro.Infrastructure.Persistence.Data
                 entity.Property(e => e.Email)
                     .HasConversion(
                             
-                            vo => vo.ToString(),
+                            ts => ts.Value,
 
-                            dbValue => Email.Parse(dbValue)
+                            to => Email.Parse(to)
                         )
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnName("Email");
 
                 entity.Property(e => e.PhoneNumber)
+                    .HasConversion(
+                        
+                        ts => ts.E164,
+
+                        to => TelephoneNumber.FromE164(to)
+                    )
                     .IsRequired()
-                    .HasMaxLength(50) 
+                    .HasMaxLength(50)
                     .HasColumnName("PhoneNumber");
 
                 entity.Property(e => e.Region)
+                    .HasConversion(
+                        
+                        ts => ts.Value,
+                        
+                        to => CountryCode.Parse(to))
                     .IsRequired()
-                    .HasMaxLength(10)
+                    .HasMaxLength(2)
                     .HasColumnName("Region");
 
                 entity.Property(e => e.Status).IsRequired();

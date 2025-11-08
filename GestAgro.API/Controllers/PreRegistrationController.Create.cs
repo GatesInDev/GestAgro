@@ -6,7 +6,7 @@ namespace GestAgro.API.Controllers
     public partial class PreRegistrationController
     {
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateEarlyRegisterRequestDTO request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Create([FromBody] CreateEarlyRegisterRequestDto request, CancellationToken cancellationToken)
         {
             try
             {

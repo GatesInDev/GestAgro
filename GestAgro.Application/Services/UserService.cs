@@ -1,21 +1,16 @@
 using GestAgro.Application.DTOs.EarlyRegister;
-using GestAgro.Application.Extensions.EnumExtensions;
 using GestAgro.Application.Interfaces;
-using GestAgro.Domain.Entities.EarlyRegister;
+using GestAgro.Domain.Entities;
 using GestAgro.Domain.Exceptions;
+using GestAgro.Domain.Interfaces;
+using GestAgro.Domain.ValueObjects;
 
-namespace GestAgro.Application.Services.EarlyRegister;
+namespace GestAgro.Application.Services;
 
-public class EarlyRegisterService : IEarlyRegisterService
+public class UserService(IUserRepository repository) : IUserService
 {
-    private readonly IEarlyRegisterRepository _repository;
 
-    public EarlyRegisterService(IEarlyRegisterRepository repository)
-    {
-        _repository = repository;
-    }
-
-    public async Task<EarlyRegisterDTO> CreateAsync(CreateEarlyRegisterRequestDTO request, CancellationToken cancellationToken = default)
+    public async Task<EarlyRegisterDto> CreateAsync(CreateEarlyRegisterRequestDto request, CancellationToken cancellationToken = default)
     {
         if (request is null) 
             throw new ArgumentNullException(nameof(request));
@@ -23,18 +18,18 @@ public class EarlyRegisterService : IEarlyRegisterService
         if (string.IsNullOrWhiteSpace(request.Name)) 
             throw new ArgumentNullException(nameof(request.Name), "Name is required.");
 
-        var exists = await _repository.GetByEmailAsync(request.Email, cancellationToken);
+        var exists = await repository.GetByEmailAsync(Email.Parse(request.Email), cancellationToken);
         if (exists is not null)
             throw new InvalidOperationException("E-mail already registered.");
 
-        var region = request.Region.GetDescription();
+        var region = CountryCode.Parse(request.Region);
         if (region is null)
             throw new ArgumentException("Region isn't valid.", nameof(request.Region));
 
         try
         {
-            var entity = User.Create(request.Name.Trim(), request.Email.Trim().ToLowerInvariant(), request.Phone, region);
-            await _repository.AddAsync(entity, cancellationToken);
+            var entity = User.Create(request.Name.Trim(), request.Email.Trim().ToLowerInvariant(), request.Phone, request.Region);
+            await repository.AddAsync(entity, cancellationToken);
             return ToDto(entity);
         }
         catch (Exception ex) when (ex is ArgumentException or DomainException)
@@ -50,13 +45,13 @@ public class EarlyRegisterService : IEarlyRegisterService
 
     public async Task<bool> ConfirmAsync(Guid id, string token, CancellationToken cancellationToken = default)
     {
-        var entity = await _repository.GetByIdAsync(id, cancellationToken);
+        var entity = await repository.GetByIdAsync(id, cancellationToken);
         if (entity == null) return false;
 
         try
         {
             entity.Confirm(token);
-            await _repository.UpdateAsync(entity, cancellationToken);
+            await repository.UpdateAsync(entity, cancellationToken);
             return true;
         }
         catch
@@ -65,17 +60,18 @@ public class EarlyRegisterService : IEarlyRegisterService
         }
     }
 
-    public async Task<IEnumerable<EarlyRegisterDTO>> GetPendingAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<EarlyRegisterDto>> GetPendingAsync(CancellationToken cancellationToken = default)
     {
-        var entities = await _repository.GetPendingAsync(cancellationToken);
+        var entities = await repository.GetPendingAsync(cancellationToken);
         return entities.Select(ToDto);
     }
 
-    private static EarlyRegisterDTO ToDto(User e) =>
-        new EarlyRegisterDTO()
+    private static EarlyRegisterDto ToDto(User e) =>
+        new EarlyRegisterDto()
         {
             Id = e.Id,
             Name = e.Name,
+            PhoneNumber = e.PhoneNumber,
             Email = e.Email,
             Status = e.Status,
             CreatedAt = e.CreatedAt,

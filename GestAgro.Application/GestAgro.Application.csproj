@@ -13,6 +13,7 @@
   <ItemGroup>
     <Folder Include="Common\Behaviors\" />
     <Folder Include="Common\Mappings\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>
