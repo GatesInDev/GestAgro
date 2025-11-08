@@ -13,13 +13,13 @@ namespace GestAgro.API.Controllers
         /// <summary>
         /// Instance of the early registration service.
         /// </summary>
-        private readonly IEarlyRegisterService _service;
+        private readonly IUserService _service;
 
         /// <summary>
         /// Dependency injection constructor.
         /// </summary>
         /// <param name="service"></param>
-        public PreRegistrationController(IEarlyRegisterService service)
+        public PreRegistrationController(IUserService service)
         {
             _service = service;
         }
