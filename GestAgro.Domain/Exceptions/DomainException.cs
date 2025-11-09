@@ -1,34 +1,44 @@
 ﻿namespace GestAgro.Domain.Exceptions
 {
     /// <summary>
-    /// Abstract base class for domain exceptions.
+    /// Exceção base abstrata para erros ocorridos dentro da camada de Domínio.
     /// </summary>
+    /// <remarks>
+    /// Esta classe serve como base para exceções mais específicas das regras de negócio
+    /// e validações do domínio, como <c>DomainValidationException</c>.
+    /// </remarks>
     public abstract class DomainException : Exception
     {
+        #region Constructors
+
         /// <summary>
-        /// Constructor for DomainException.
+        /// Inicializa uma nova instância da classe <see cref="DomainException"/>.
         /// </summary>
         protected DomainException()
         {
         }
 
         /// <summary>
-        /// Constructor for DomainException with message.
+        /// Inicializa uma nova instância da classe <see cref="DomainException"/> 
+        /// com uma mensagem de erro específica.
         /// </summary>
-        /// <param name="message">Message fo base.</param>
+        /// <param name="message">A mensagem que descreve o erro.</param>
         protected DomainException(string message)
             : base(message)
         {
         }
 
         /// <summary>
-        /// Constructor for DomainException with message and inner exception.
+        /// Inicializa uma nova instância da classe <see cref="DomainException"/> 
+        /// com uma mensagem de erro específica e uma referência à exceção interna.
         /// </summary>
-        /// <param name="message">Message for base.</param>
-        /// <param name="inner">Inner for base.</param>
+        /// <param name="message">A mensagem que descreve o erro.</param>
+        /// <param name="inner">A exceção que é a causa da exceção atual.</param>
         protected DomainException(string message, Exception inner)
             : base(message, inner)
         {
         }
+
+        #endregion
     }
 }

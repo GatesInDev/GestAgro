@@ -4,8 +4,8 @@ namespace GestAgro.Application.Interfaces
 {
     public interface IUserService
     {
-        Task<EarlyRegisterDto> CreateAsync(CreateEarlyRegisterRequestDto request, CancellationToken cancellationToken = default);
-        Task<bool> ConfirmAsync(Guid id, string token, CancellationToken cancellationToken = default);
-        Task<IEnumerable<EarlyRegisterDto>> GetPendingAsync(CancellationToken cancellationToken = default);
+        Task<UserDto> CreateAsync(CreateUserDto request, CancellationToken cancellationToken = default);
+        Task ConfirmAsync(Guid id, string token, CancellationToken cancellationToken = default);
+        Task<IEnumerable<UserDto>> GetPendingAsync(CancellationToken cancellationToken = default);
     }
 }

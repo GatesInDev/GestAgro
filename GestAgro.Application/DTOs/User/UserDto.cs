@@ -3,7 +3,7 @@ using GestAgro.Domain.ValueObjects;
 
 namespace GestAgro.Application.DTOs.EarlyRegister
 {
-    public class EarlyRegisterDto
+    public class UserDto
     {
         public Guid Id { get; init; }
         public string Name { get; set; } = null!;
