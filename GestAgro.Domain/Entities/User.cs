@@ -101,13 +101,11 @@ namespace GestAgro.Domain.Entities
             if (string.IsNullOrWhiteSpace(name))
                 throw new DomainValidationException(nameof(name), "O nome não pode estar vazio.");
 
-            if (!Email.TryParse(email, out var voEmail))
+            if (!Email.TryParse(email.Trim().ToLowerInvariant(), out var voEmail))
                 throw new DomainValidationException(nameof(email), "O formato do e-mail é inválido.");
 
-            if (!CountryCode.TryParse(region, out var voRegion))
-            {
-                voRegion = CountryCode.Parse("BR");
-            }
+            if (!CountryCode.TryParse(region.Trim().ToUpperInvariant(), out var voRegion))
+                throw new DomainValidationException(nameof(region), "O formato da região é inválido.");
 
             if (!TelephoneNumber.TryParse(phone, voRegion.Value, out var voPhoneNumber))
                 throw new DomainValidationException(nameof(phone), "O formato do telefone é inválido.");

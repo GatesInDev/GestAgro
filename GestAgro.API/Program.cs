@@ -1,13 +1,28 @@
 using GestAgro.Application.Interfaces;
+using GestAgro.Application.Services.UserService;
+using GestAgro.Domain.Entities;
+using GestAgro.Domain.Interfaces;
 using GestAgro.Infrastructure.Persistence.Data;
 using GestAgro.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization;
-using GestAgro.Domain.Interfaces;
-using GestAgro.Domain.Entities;
-using GestAgro.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: myAllowSpecificOrigins,
+        policy =>
+        {
+            policy.WithOrigins(
+                    "https://gestagro.vitoraltmann.dev", 
+                    "http://localhost:3000" 
+                )
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -15,11 +30,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, EarlyRegisterRepository>();
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-    });
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -44,5 +55,6 @@ if (app.Environment.IsDevelopment())
 
 app.MapControllers();
 app.UseHttpsRedirection();
+app.UseCors(myAllowSpecificOrigins);
 
 app.Run();
