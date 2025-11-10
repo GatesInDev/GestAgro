@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GestAgro.API.Controllers
 {
-    public partial class PreRegistrationController
+    public partial class UserController
     {
         /// <summary>
         /// Busca todos os pré-cadastros que ainda estão com status pendente.
@@ -12,7 +12,7 @@ namespace GestAgro.API.Controllers
         /// <response code="200">Retorna a lista de pré-cadastros pendentes.</response>
         /// <response code="500">Ocorre se um erro inesperado acontecer no servidor.</response>
         [HttpGet("pending")]
-        [ProducesResponseType(typeof(IEnumerable<UserDto>), StatusCodes.Status200OK)] // Informa ao Swagger o tipo de retorno
+        [ProducesResponseType(typeof(IEnumerable<UserDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetPending(CancellationToken cancellationToken)
         {

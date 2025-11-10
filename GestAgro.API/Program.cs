@@ -5,6 +5,7 @@ using GestAgro.Domain.Interfaces;
 using GestAgro.Infrastructure.Persistence.Data;
 using GestAgro.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,7 +30,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IUserRepository, EarlyRegisterRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -43,6 +44,7 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeXmlComments(domainXmlPath);
 
 });
+builder.Services.AddApplicationInsightsTelemetry(builder.Configuration);
 
 
 var app = builder.Build();
