@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GestAgro.API.Controllers
 {
-    public partial class PreRegistrationController
+    public partial class UserController
     {
         /// <summary>
         /// Cria um novo pré-cadastro no sistema.
@@ -27,6 +27,10 @@ namespace GestAgro.API.Controllers
                 var dto = await _service.CreateAsync(request, cancellationToken);
                 // TODO: Adicionar o envio de e-mail de confirmação aqui.
                 return CreatedAtAction(nameof(GetPending), new { id = dto.Id }, dto);
+            }
+            catch (DomainException ex)
+            {
+                return BadRequest(new { erro = ex.Message });
             }
             catch (ArgumentException ex)
             {

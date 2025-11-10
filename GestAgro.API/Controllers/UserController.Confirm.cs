@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GestAgro.API.Controllers
 {
-    public partial class PreRegistrationController
+    public partial class UserController
     {
         /// <summary>
         /// Confirma um pré-cadastro usando o ID e o token fornecidos.
