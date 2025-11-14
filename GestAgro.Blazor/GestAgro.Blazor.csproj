@@ -11,6 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\Home\Components\" />
+    <Folder Include="Features\Home\Services\" />
     <Folder Include="Shared\Components\" />
   </ItemGroup>
 

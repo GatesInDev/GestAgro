@@ -1,7 +1,59 @@
 ﻿@inherits LayoutComponentBase
 
-    <NavBar />
+<div class="page-wrapper @menuStateCssClass">
 
-    <main class="container-fluid py-4 layout-body">
-        @Body
-    </main>
+    <nav class="sidebar-menu component-glass shadow-glass">
+
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title" id="offcanvasNavLabel"></h5>
+        </div>
+
+        <div class="offcanvas-body d-flex flex-column p-0">
+            <ul class="navbar-nav flex-grow-1 p-3">
+                <li class="nav-item">
+                    <a class="nav-link active glass-button rounded-3 m-1 p-3" aria-current="page" href="#">
+                        <i class="bi bi-house-door-fill me-2"></i>
+                        Início
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active glass-button rounded-3 m-1 p-3" aria-current="page" href="register">
+                        <i class="bi bi-person-plus-fill me-2"></i>
+                        Registrar-se
+                    </a>
+                </li>
+            </ul>
+
+            <div class="mt-auto border-top p-3">
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-content">
+
+        <nav class="navbar sticky-top component-glass">
+            <div class="container-fluid">
+
+                <button class="navbar-toggler" type="button" @onclick="ToggleMenu">
+                    <i class="bi bi-arrow-bar-right"></i>
+                </button>
+
+            </div>
+        </nav>
+
+        <main class="p-3">
+            @Body
+        </main>
+    </div>
+
+</div>
+
+@code {
+    private bool isMenuOpen = true;
+    private string menuStateCssClass => isMenuOpen ? "menu-is-open" : "menu-is-closed";
+
+    private void ToggleMenu()
+    {
+        isMenuOpen = !isMenuOpen;
+    }
+}

@@ -10,12 +10,11 @@
     <link rel="stylesheet" href="app.css" />
     <link rel="stylesheet" href="GestAgro.Blazor.styles.css" />
     <link rel="icon" type="image/png" href="favicon.png" />
-    <HeadOutlet />
+    <HeadOutlet @rendermode="InteractiveServer" />
 </head>
 
 <body>
-<Routes />
-    <script src="bootstrap/bootstrap.bundle.min.js"></script>
+    <Routes @rendermode="InteractiveServer" />
     <script src="_framework/blazor.web.js"></script>
 </body>
 
