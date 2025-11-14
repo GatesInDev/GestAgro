@@ -1,14 +1,15 @@
-using GestAgro.Shared.DTOs.User;
 using GestAgro.Application.Interfaces;
 using GestAgro.Domain.Entities;
 using GestAgro.Domain.Interfaces;
+using GestAgro.Shared.DTOs.User;
 
 namespace GestAgro.Application.Services.UserService;
 
 public partial class UserService(IUserRepository repository) : IUserService
 {
-    private static UserDto ToDto(User e) =>
-        new UserDto()
+    private static UserDto ToDto(User e)
+    {
+        return new UserDto
         {
             Id = e.Id,
             Name = e.Name,
@@ -19,4 +20,5 @@ public partial class UserService(IUserRepository repository) : IUserService
             CreatedAt = e.CreatedAt,
             ConfirmedAt = e.ConfirmedAt
         };
+    }
 }

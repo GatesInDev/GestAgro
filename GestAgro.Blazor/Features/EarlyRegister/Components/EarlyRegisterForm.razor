@@ -8,7 +8,7 @@
     <div class="mb-3">
         <label for="emailInput" class="form-label">Email address</label>
         <InputText id="emailInput" class="form-control" @bind-Value="_model.Email"/>
-        <label for="regionDropBox" class="form-label" ></label>
+        <label for="regionDropBox" class="form-label"></label>
         <InputSelect id="regionDropBox" class="form-select" @bind-Value="_model.Region"></InputSelect>
         <ValidationMessage For="@(() => _model.Email)"/>
     </div>
@@ -29,13 +29,13 @@
 
     private string _successMessage = string.Empty;
     private string _errorMessage = string.Empty;
-    private bool _loading = false;
+    private bool _loading;
 
     private async Task HandleValidSubmit()
     {
-            _loading = true;
-            _successMessage = string.Empty;
-            _errorMessage = string.Empty;
+        _loading = true;
+        _successMessage = string.Empty;
+        _errorMessage = string.Empty;
         try
         {
             await UserService.CreateUser(_model);
@@ -52,4 +52,5 @@
 
         _model = new CreateUserDto();
     }
+
 }

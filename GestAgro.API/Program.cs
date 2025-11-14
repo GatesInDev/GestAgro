@@ -1,3 +1,4 @@
+using System.Reflection;
 using GestAgro.Application.Interfaces;
 using GestAgro.Application.Services.UserService;
 using GestAgro.Domain.Entities;
@@ -5,7 +6,6 @@ using GestAgro.Domain.Interfaces;
 using GestAgro.Infrastructure.Persistence.Data;
 using GestAgro.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,12 +13,12 @@ var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: myAllowSpecificOrigins,
+    options.AddPolicy(myAllowSpecificOrigins,
         policy =>
         {
             policy.WithOrigins(
-                    "https://gestagro.vitoraltmann.dev", 
-                    "http://localhost:3000" 
+                    "https://gestagro.vitoraltmann.dev",
+                    "http://localhost:3000"
                 )
                 .AllowAnyHeader()
                 .AllowAnyMethod();
@@ -39,14 +39,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    var apiXmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var apiXmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var apiXmlPath = Path.Combine(AppContext.BaseDirectory, apiXmlFile);
     options.IncludeXmlComments(apiXmlPath);
 
     var domainXmlFile = $"{typeof(User).Assembly.GetName().Name}.xml";
     var domainXmlPath = Path.Combine(AppContext.BaseDirectory, domainXmlFile);
     options.IncludeXmlComments(domainXmlPath);
-
 });
 builder.Services.AddApplicationInsightsTelemetry(builder.Configuration);
 

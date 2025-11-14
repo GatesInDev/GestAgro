@@ -6,9 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 var apiBaseUrl = builder.Configuration["ApiBaseUrl"];
 
 if (string.IsNullOrEmpty(apiBaseUrl))
-{
     throw new InvalidOperationException("ApiBaseUrl não foi definida no appsettings.json!");
-}
 
 Action<HttpClient> configureApi = client =>
 {
@@ -24,7 +22,7 @@ var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error", createScopeForErrors: true);
+    app.UseExceptionHandler("/Error", true);
     app.UseHsts();
 }
 
