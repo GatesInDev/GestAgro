@@ -1,4 +1,4 @@
-using GestAgro.Application.DTOs.EarlyRegister;
+using GestAgro.Shared.DTOs.User;
 
 namespace GestAgro.Application.Interfaces
 {

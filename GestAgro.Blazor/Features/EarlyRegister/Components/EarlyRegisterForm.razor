@@ -1,0 +1,55 @@
+﻿@inject IUserService UserService
+
+<EditForm Model="@_model" OnValidSubmit="@HandleValidSubmit">
+
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+
+    <div class="mb-3">
+        <label for="emailInput" class="form-label">Email address</label>
+        <InputText id="emailInput" class="form-control" @bind-Value="_model.Email"/>
+        <label for="regionDropBox" class="form-label" ></label>
+        <InputSelect id="regionDropBox" class="form-select" @bind-Value="_model.Region"></InputSelect>
+        <ValidationMessage For="@(() => _model.Email)"/>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Register</button>
+
+    @if (!string.IsNullOrEmpty(_successMessage))
+    {
+        <div class="alert alert-success mt-3" role="text-danger">
+            @_successMessage
+        </div>
+    }
+
+</EditForm>
+
+@code {
+    private CreateUserDto _model = new();
+
+    private string _successMessage = string.Empty;
+    private string _errorMessage = string.Empty;
+    private bool _loading = false;
+
+    private async Task HandleValidSubmit()
+    {
+            _loading = true;
+            _successMessage = string.Empty;
+            _errorMessage = string.Empty;
+        try
+        {
+            await UserService.CreateUser(_model);
+
+            _successMessage = $"Sucesso ao fazer o pre registro: {_model.Email}";
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = ex.Message;
+            return;
+        }
+
+        _successMessage = $"Registration successful for email: {_model.Email}";
+
+        _model = new CreateUserDto();
+    }
+}

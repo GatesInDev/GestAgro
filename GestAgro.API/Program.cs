@@ -24,7 +24,11 @@ builder.Services.AddCors(options =>
                 .AllowAnyMethod();
         });
 });
-
+builder.Services.Configure<RouteOptions>(options =>
+{
+    options.LowercaseQueryStrings = true;
+    options.LowercaseUrls = true;
+});
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));

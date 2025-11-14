@@ -1,4 +1,4 @@
-﻿using GestAgro.Application.DTOs.EarlyRegister;
+﻿using GestAgro.Shared.DTOs.User;
 using GestAgro.Domain.Entities;
 using GestAgro.Domain.Enums;
 using GestAgro.Domain.Exceptions;

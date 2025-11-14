@@ -1,7 +1,7 @@
 ﻿using GestAgro.Domain.Enums;
 using GestAgro.Domain.ValueObjects;
 
-namespace GestAgro.Application.DTOs.EarlyRegister
+namespace GestAgro.Shared.DTOs.User
 {
     public class UserDto
     {
