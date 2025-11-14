@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using GestAgro.Domain.ValueObjects;
 
-namespace GestAgro.Application.DTOs.EarlyRegister
+namespace GestAgro.Shared.DTOs.User
 {
     public class CreateUserDto
     {

@@ -1,11 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36518.9
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11205.157 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestAgro.API", "GestAgro.API\GestAgro.API.csproj", "{8862AF31-3530-4AEC-AF7F-1BAD21168972}"
 	ProjectSection(ProjectDependencies) = postProject
 		{75E9D256-0CE4-494D-B93E-C60CA135CE31} = {75E9D256-0CE4-494D-B93E-C60CA135CE31}
+		{F435FBD7-EF74-4797-AE8E-796100216843} = {F435FBD7-EF74-4797-AE8E-796100216843}
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
@@ -21,6 +22,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestAgro.Application.Tests", "GestAgro.Applications.Tests\GestAgro.Application.Tests.csproj", "{155F6963-EE89-4FE0-A3A3-D0A04F52EB13}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestAgro.Domain.Tests", "GestAgro.Domain.Tests\GestAgro.Domain.Tests.csproj", "{AE36DE13-D911-4FA7-8CD5-64C970F11D99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestAgro.Shared", "GestAgro.Shared\GestAgro.Shared.csproj", "{F435FBD7-EF74-4797-AE8E-796100216843}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestAgro.Blazor", "GestAgro.Blazor\GestAgro.Blazor.csproj", "{80E96C96-CA58-4AAF-9C09-959499839174}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +57,14 @@ Global
 		{AE36DE13-D911-4FA7-8CD5-64C970F11D99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE36DE13-D911-4FA7-8CD5-64C970F11D99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE36DE13-D911-4FA7-8CD5-64C970F11D99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F435FBD7-EF74-4797-AE8E-796100216843}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F435FBD7-EF74-4797-AE8E-796100216843}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F435FBD7-EF74-4797-AE8E-796100216843}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F435FBD7-EF74-4797-AE8E-796100216843}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80E96C96-CA58-4AAF-9C09-959499839174}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80E96C96-CA58-4AAF-9C09-959499839174}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80E96C96-CA58-4AAF-9C09-959499839174}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80E96C96-CA58-4AAF-9C09-959499839174}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,6 +76,8 @@ Global
 		{8A54585C-5B05-49B4-9723-0D80F05ABE81} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{155F6963-EE89-4FE0-A3A3-D0A04F52EB13} = {996CD0BC-AD8E-42BF-8D0F-95AF45267709}
 		{AE36DE13-D911-4FA7-8CD5-64C970F11D99} = {996CD0BC-AD8E-42BF-8D0F-95AF45267709}
+		{F435FBD7-EF74-4797-AE8E-796100216843} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{80E96C96-CA58-4AAF-9C09-959499839174} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AE758592-850B-48F0-AA15-D02D9256D9E3}

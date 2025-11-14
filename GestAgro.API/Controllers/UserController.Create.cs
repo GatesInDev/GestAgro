@@ -1,5 +1,5 @@
-﻿using GestAgro.Application.DTOs.EarlyRegister;
-using GestAgro.Domain.Exceptions;
+﻿using GestAgro.Domain.Exceptions;
+using GestAgro.Shared.DTOs.User;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GestAgro.API.Controllers
