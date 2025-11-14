@@ -1,19 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\GestAgro.Shared\GestAgro.Shared.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\GestAgro.Shared\GestAgro.Shared.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Home\Components\" />
-    <Folder Include="Features\Home\Services\" />
-    <Folder Include="Shared\Components\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Features\Home\Components\" />
+		<Folder Include="Features\Home\Services\" />
+		<Folder Include="Shared\Components\" />
+	</ItemGroup>
 
 </Project>
