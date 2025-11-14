@@ -28,8 +28,8 @@ jobs:
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
-      - name: dotnet publish
-        run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+      - name: dotnet publish API
+        run: dotnet publish GestAgro.API/GestAgro.API.csproj -c Release -o ${{env.DOTNET_ROOT}}/api-app
 
       - name: Install EF Core Tools
         run: dotnet tool install --global dotnet-ef --version 9.0.9
@@ -39,13 +39,21 @@ jobs:
         env:
           ConnectionStrings__DefaultConnection: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
 
-      - name: Upload artifact for deployment job
+      - name: Upload API artifact
         uses: actions/upload-artifact@v4
         with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          name: api-artifact
+          path: ${{env.DOTNET_ROOT}}/api-app
 
-  deploy:
+      # Carrega o artefato do Blazor
+      - name: Upload Blazor artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: blazor-artifact
+          path: ${{env.DOTNET_ROOT}}/blazor-app
+
+  # --- JOB 1: FAZ O DEPLOY DA API ---
+  deploy-api:
     runs-on: windows-latest
     needs: build
     permissions:
@@ -53,11 +61,11 @@ jobs:
       contents: read #This is required for actions/checkout
 
     steps:
-      - name: Download artifact from build job
+      - name: Download artifact for API
         uses: actions/download-artifact@v4
         with:
-          name: .net-app
-      
+          name: api-artifact
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -65,7 +73,7 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_BE1F4BE3572D4FEE85B7E0B5AFFE7D58 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_EBD910ED06A745ECBB0CAE46D68F5ED5 }}
 
-      - name: Deploy to Azure Web App
+      - name: Deploy API to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
