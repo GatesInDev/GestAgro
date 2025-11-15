@@ -1,37 +1,16 @@
 using GestAgro.Blazor;
-using GestAgro.Blazor.Features.EarlyRegister.Services;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebAssemblyHostBuilder.CreateDefault(args);
+builder.RootComponents.Add<App>("#app");
+builder.RootComponents.Add<HeadOutlet>("head::after");
 
-var apiBaseUrl = builder.Configuration["ApiBaseUrl"];
+var apiBaseUrl = builder.Configuration.GetValue<string>("ApiBaseUrl");
+var baseAddress = string.IsNullOrWhiteSpace(apiBaseUrl)
+    ? builder.HostEnvironment.BaseAddress
+    : apiBaseUrl;
 
-if (string.IsNullOrEmpty(apiBaseUrl))
-    throw new InvalidOperationException("ApiBaseUrl não foi definida no appsettings.json!");
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(baseAddress) });
 
-Action<HttpClient> configureApi = client =>
-{
-    client.BaseAddress = new Uri(apiBaseUrl);
-    client.DefaultRequestHeaders.Add("Accept", "application/json");
-};
-builder.Services.AddHttpClient<IUserService, UserService>(configureApi);
-
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
-
-var app = builder.Build();
-
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error", true);
-    app.UseHsts();
-}
-
-app.UseHttpsRedirection();
-
-app.UseStaticFiles();
-app.UseAntiforgery();
-
-app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
-
-app.Run();
+await builder.Build().RunAsync();

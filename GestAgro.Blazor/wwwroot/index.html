@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GestAgro.Blazor</title>
+    <base href="/" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="app.css" />
+
+</head>
+
+<body>
+    <style>
+        :root {
+            --palette-white-warm: #f9f8dd;
+            --palette-lime-light: #d2e291;
+            --palette-black-warm: #272120;
+            --palette-blue-pale: #b7c4d0;
+            --palette-forest-green: #5c8d58;
+            --palette-tan: #ba9572;
+            --bs-box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.05);
+            --bs-border-radius-xl: 1rem;
+            --bs-primary: var(--palette-forest-green);
+            --bs-danger: var(--palette-tan);
+        }
+
+        [data-bs-theme="light"] {
+            --bs-body-bg: var(--palette-white-warm);
+            --bs-body-color: var(--palette-black-warm);
+            --theme-glass-bg: rgba(249, 248, 221, 0.6);
+            --theme-glass-border: rgba(255, 255, 255, 0.7);
+            --theme-glass-shadow-color: rgba(0, 0, 0, 0.08);
+            --theme-glass-shadow: var(--bs-box-shadow), 0 0 25px var(--theme-glass-shadow-color);
+        }
+
+        body {
+            background-image: linear-gradient( 120deg, var(--palette-blue-pale) 0%, var(--palette-lime-light) 100% );
+            background-attachment: fixed;
+            background-size: cover;
+            min-height: 100vh;
+            color: var(--bs-body-color);
+        }
+
+        .component-glass {
+            background-color: var(--theme-glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            overflow: hidden;
+            border: 1px solid var(--theme-glass-border);
+            box-shadow: var(--theme-glass-shadow);
+            border-radius: var(--bs-border-radius-xl, 1rem);
+        }
+
+        .shadow-glass {
+            box-shadow: 0 8px 36px 0 rgba(31, 38, 135, 0.1);
+        }
+
+        .glass-button {
+            border: none;
+            box-shadow: var(--theme-glass-shadow);
+        }
+
+        #blazor-loading-ui {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loading-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            padding: 2.5rem 3rem;
+            color: var(--bs-body-color);
+        }
+
+        #blazor-error-ui {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+            z-index: 1050;
+            display: none;
+        }
+
+            #blazor-error-ui[style*="display: block"] {
+                display: flex !important;
+            }
+
+        .error-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+            padding: 2.5rem;
+            max-width: 90%;
+            width: 500px;
+            text-align: center;
+            color: var(--bs-body-color);
+        }
+
+            .error-box .bi {
+                font-size: 3rem;
+                color: var(--bs-danger);
+                filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+            }
+    </style>
+
+    <div id="app">
+        <div id="blazor-loading-ui">
+            <div class="loading-box component-glass shadow-glass">
+                <div class="spinner-border" style="width: 3rem; height: 3rem; color: var(--bs-primary);" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <div style="font-size: 1.2rem; color: var(--bs-body-color);">Carregando...</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="blazor-error-ui">
+        <div class="error-box component-glass shadow-glass">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <div>
+                <h4 class="fw-bold" style="color: var(--bs-body-color);">Ocorreu um erro</h4>
+                <p style="opacity: 0.8;">Houve um problema ao carregar o aplicativo. Tente recarregar a página.</p>
+            </div>
+            <div class="container text-center d-flex justify-content-center gap-3">
+                <a href="/" class="btn btn-primary glass-button" style="background-color: var(--bs-primary); padding: .5rem 1.5rem;">
+                    <i class="bi bi-house-door-fill me-2"></i>Voltar
+                </a>
+
+                <a href="" class="btn btn-primary glass-button" style="background-color: var(--bs-primary); padding: .5rem 1.5rem;">
+                    <i class="bi bi-arrow-clockwise me-2"></i>Recarregar
+                </a>
+            </div>
+        </div>
+    </div>
+
+<script src="_framework/blazor.webassembly.js"></script>
+
+</body>
+</html>
