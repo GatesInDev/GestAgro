@@ -17,7 +17,7 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.WithOrigins(
-                    "https://gestagro.vitoraltmann.dev",
+                    "https://agrogest.vitoraltmann.dev",
                     "http://localhost:3000"
                 )
                 .AllowAnyHeader()
@@ -60,6 +60,9 @@ if (app.Environment.IsDevelopment())
 
 app.MapControllers();
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseCors(myAllowSpecificOrigins);
+app.UseBlazorFrameworkFiles();
+app.MapFallbackToFile("index.html");
 
 app.Run();

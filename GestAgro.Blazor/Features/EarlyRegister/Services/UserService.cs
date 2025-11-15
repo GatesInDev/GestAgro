@@ -1,4 +1,5 @@
-﻿using GestAgro.Shared.DTOs.User;
+﻿using System.Net.Http.Json;
+using GestAgro.Shared.DTOs.User;
 
 namespace GestAgro.Blazor.Features.EarlyRegister.Services;
 
