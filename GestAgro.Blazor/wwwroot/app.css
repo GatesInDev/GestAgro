@@ -1,3 +1,6 @@
+/* =========================================
+   1. VARIÁVEIS E TEMAS
+   ========================================= */
 :root {
     --palette-white-warm: #f9f8dd;
     --palette-lime-light: #d2e291;
@@ -14,35 +17,24 @@
     --palette-blue-pale: #b7c4d0;
     --palette-blue-sky: #8daad6;
     --palette-periwinkle: #9197b6;
-    --palette-forest-green: #5c8d58;
     --bs-box-shadow-sm: 0 .125rem .25rem rgba(0, 0, 0, 0.04);
     --bs-box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.05);
     --bs-box-shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.07);
-    --sidebar-width: clamp(20vw, 350px, 60vw);
+    --sidebar-width: clamp(250px, 20vw, 350px);
     --page-gutter: 1rem;
     --bs-primary: var(--palette-forest-green);
-    --bs-primary-rgb: 92, 141, 88;
     --bs-secondary: var(--palette-gray-purple);
-    --bs-secondary-rgb: 139, 136, 147;
     --bs-success: var(--palette-lime-bright);
-    --bs-success-rgb: 168, 212, 85;
     --bs-info: var(--palette-blue-sky);
-    --bs-info-rgb: 141, 170, 214;
     --bs-warning: var(--palette-gold);
-    --bs-warning-rgb: 224, 191, 122;
     --bs-danger: var(--palette-tan);
-    --bs-danger-rgb: 186, 149, 114;
 }
 
 [data-bs-theme="light"] {
     --bs-body-bg: var(--palette-white-warm);
-    --bs-body-bg-rgb: 249, 248, 221;
     --bs-body-color: var(--palette-black-warm);
-    --bs-body-color-rgb: 39, 33, 32;
     --bs-light: var(--palette-white-warm);
-    --bs-light-rgb: 249, 248, 221;
     --bs-dark: var(--palette-gray-dark);
-    --bs-dark-rgb: 84, 85, 92;
     --theme-glass-bg: rgba(249, 248, 221, 0.6);
     --theme-glass-border: rgba(255, 255, 255, 0.7);
     --theme-glass-glow-color: rgba(255, 255, 255, 0.4);
@@ -53,13 +45,9 @@
 
 [data-bs-theme="dark"] {
     --bs-body-bg: var(--palette-black-warm);
-    --bs-body-bg-rgb: 39, 33, 32;
     --bs-body-color: var(--palette-white-warm);
-    --bs-body-color-rgb: 249, 248, 221;
     --bs-light: var(--palette-gray-dark);
-    --bs-light-rgb: 84, 85, 92;
     --bs-dark: var(--palette-blue-pale);
-    --bs-dark-rgb: 183, 196, 208;
     --theme-glass-bg: rgba(59, 71, 60, 0.5);
     --theme-glass-border: rgba(255, 255, 255, 0.1);
     --theme-glass-glow-color: rgba(255, 255, 255, 0.1);
@@ -73,29 +61,138 @@ body {
     background-attachment: fixed;
     background-size: cover;
     min-height: 100vh;
+    overflow: hidden;
+    margin: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: default;
 }
+
+/* =========================================
+   2. ESTRUTURA GRID
+   ========================================= */
+
+.page-wrapper {
+    display: grid;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    grid-template-columns: var(--sidebar-width) 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+        "sidebar header"
+        "sidebar main";
+    gap: var(--page-gutter);
+    padding: var(--page-gutter);
+    transition: grid-template-columns 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), gap 0.4s ease;
+}
+
+    .page-wrapper.menu-is-closed {
+        grid-template-columns: 0px 1fr;
+        gap: var(--page-gutter) 0;
+    }
+
+        .page-wrapper.menu-is-closed .sidebar-area {
+            opacity: 0; 
+            border: none;
+            box-shadow: none; 
+            overflow: hidden; 
+            padding: 0; 
+            pointer-events: none;
+            transition: opacity 0.2s ease, border 0s linear 0.4s;
+        }
+
+/* --- Áreas do Grid --- */
+
+/* A. Sidebar */
+.sidebar-area {
+    grid-area: sidebar;
+    min-width: 0; 
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap; 
+}
+
+/* B. Navbar */
+.navbar-area {
+    grid-area: header;
+    min-width: 0;
+}
+
+/* C. Conteúdo Principal */
+.content-area {
+    grid-area: main;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    will-change: width;
+    overflow-anchor: none;
+}
+
+/* =========================================
+   3. COMPONENTES VISUAIS
+   ========================================= */
 
 .component-glass {
     background-color: var(--theme-glass-bg);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    overflow: hidden;
-    background-clip: border-box;
     border: 1px solid var(--theme-glass-border);
     box-shadow: var(--theme-glass-shadow);
     border-radius: var(--bs-border-radius-xl, 1rem);
-    transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    transition: all 0.4s ease;
 }
 
 .shadow-glass {
     box-shadow: 0 8px 36px 0 rgba(31, 38, 135, 0.1);
 }
 
-.navbar-toggler,
-.glass-button {
+/* Cartão que segura o conteúdo */
+.content-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* A ÁREA DE SCROLL INTERNA */
+.card-body-scroll {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px;
+}
+
+    /* Scrollbars Personalizadas */
+    .card-body-scroll::-webkit-scrollbar,
+    .offcanvas-body::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .card-body-scroll::-webkit-scrollbar-track,
+    .offcanvas-body::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .card-body-scroll::-webkit-scrollbar-thumb,
+    .offcanvas-body::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+    }
+
+        .card-body-scroll::-webkit-scrollbar-thumb:hover,
+        .offcanvas-body::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+/* Botões e Inputs Glass */
+.navbar-toggler, .glass-button {
     border: none;
     box-shadow: var(--theme-glass-shadow);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.4s ease;
 }
 
 :is(.navbar-toggler, .glass-button):is(:focus, :active, :hover) {
@@ -103,45 +200,187 @@ body {
     outline: none !important;
 }
 
+/* Animação do ícone do menu */
 .page-wrapper.menu-is-open .navbar-toggler {
     transform: rotate(180deg);
 }
 
-.page-wrapper {
+.glass-input {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: var(--bs-body-color);
+    backdrop-filter: blur(5px);
+}
+
+    .glass-input:focus {
+        background-color: rgba(255, 255, 255, 0.3);
+        border-color: var(--palette-lime-bright);
+        box-shadow: 0 0 0 0.25rem rgba(168, 212, 85, 0.25);
+    }
+
+/* Tabelas Glass */
+.custom-glass-table {
+    --bs-table-bg: transparent;
+    --bs-table-hover-bg: rgba(255,255,255, 0.15);
+    color: var(--bs-body-color);
+}
+
+[data-bs-theme="dark"] .custom-glass-table {
+    --bs-table-hover-bg: rgba(0,0,0, 0.15);
+}
+
+.custom-glass-table th {
+    background-color: transparent;
+    font-weight: 600;
+}
+
+.custom-glass-table td {
+    background-color: transparent;
+    border-bottom: 1px solid rgba(var(--bs-secondary-rgb), 0.1);
+}
+
+/* Container focado em leitura, não em largura total */
+.spa-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem; /* Espaço generoso entre as seções */
+}
+
+/* Títulos de Impacto */
+.hero-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    background: linear-gradient(135deg, var(--palette-dark-green), var(--palette-forest-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1.5rem;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* O Cartão de Demonstração (O "Mockup") */
+.demo-card {
     position: relative;
-    overflow-x: hidden;
-    min-height: 100vh;
-    box-sizing: border-box;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+    overflow: visible !important; 
+    z-index: 1;
 }
 
-.sidebar-menu {
-    position: fixed;
-    z-index: 1000;
-    top: var(--page-gutter);
-    height: calc(100vh - (var(--page-gutter) * 2));
-    width: var(--sidebar-width);
-    transition: transform 0.3s ease-in-out;
+    .demo-card:hover {
+        transform: perspective(1000px) rotateX(2deg) rotateY(2deg);
+    }
+
+/* Efeito de "Notificação Flutuante" decorativa */
+.floating-badge {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background: var(--palette-lime-bright);
+    color: var(--palette-dark-green);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-weight: bold;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    animation: floatBadge 3s ease-in-out infinite;
+    z-index: 10;
 }
 
-.page-content {
-    transition: margin-left 0.3s ease-in-out;
-    padding-top: var(--page-gutter);
-    padding-bottom: var(--page-gutter);
-    padding-right: var(--page-gutter);
+@keyframes floatBadge {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
-.page-wrapper.menu-is-open .sidebar-menu {
-    transform: translateX(var(--page-gutter));
+.badge-alert {
+    /* 1. O Degradê: Dá volume em vez de ser uma cor chapada */
+    background: linear-gradient(135deg, #ff7675 0%, #d63031 100%);
+    /* 2. Texto e Fonte */
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    /* 3. Espaçamento e Forma */
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px; /* Pill shape completo */
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* Espaço entre ícone e texto */
+    /* 4. O Toque Premium: Borda interna de luz e Sombra de brilho */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 20px rgba(214, 48, 49, 0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+    /* Mantém a animação de flutuar */
+    z-index: 100;
 }
 
-.page-wrapper.menu-is-open .page-content {
-    margin-left: calc(var(--sidebar-width) + (var(--page-gutter) * 2));
+    /* Pequeno detalhe no ícone para destacar */
+    .badge-alert i {
+        font-size: 1.1em;
+        filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
+    }
+
+.hero-wrapper {
+    /* Truque para ocupar 100% mesmo dentro de uma div com padding */
+    margin-left: -20px;
+    margin-right: -20px;
+    margin-top: -20px; /* Cola no topo */
+    width: calc(100% + 40px); /* Compensa o que tiramos nas margens */
+    /* Configuração da Imagem + Overlay */
+    background-image: linear-gradient(to bottom, rgba(249, 248, 221, 0.92), rgba(249, 248, 221, 0.7) 80%, var(--bs-body-bg) 100%), url('https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=1740&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    /* Espaçamento interno para o conteúdo não colar nas bordas */
+    padding: 6rem 1rem 4rem 1rem;
+    margin-bottom: 2rem;
 }
 
-.page-wrapper.menu-is-closed .sidebar-menu {
-    transform: translateX(calc(-1 * var(--sidebar-width)));
+/* 2. O CONTEÚDO INTERNO */
+/* Responsabilidade: Centralizar o texto e limitar a largura */
+.hero-content-limit {
+    max-width: 800px;
+    margin: 0 auto; /* Centraliza horizontalmente */
+    position: relative;
+    z-index: 2; /* Garante que o texto fica sobre a imagem */
 }
 
-.page-wrapper.menu-is-closed .page-content {
-    margin-left: var(--page-gutter);
+.benefit-card {
+    height: 100%;
+    padding: 2.5rem 2rem; /* Mais espaço interno para respirar */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Animação com leve "salto" */
+    /* AQUI ESTÁ A MUDANÇA: */
+    border-radius: 2rem; /* Curva bem acentuada (aprox 32px) */
+    border: 2px solid rgba(255, 255, 255, 0.5); /* Borda mais grossa (2px) para destacar o desenho */
+    /* Fundo vidro */
+    background: var(--theme-glass-bg);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Sombra suave para dar volume */
+}
+
+/* Efeito Hover melhorado */
+.benefit-card:hover {
+    transform: translateY(-8px) scale(1.02); /* Sobe e cresce levemente */
+    background: rgba(255, 255, 255, 0.65);
+    border-color: var(--palette-lime-bright); /* A borda fica verde vibrante */
+    box-shadow: 0 20px 40px rgba(92, 141, 88, 0.15); /* Sombra verde suave */
+}
+
+/* Ajuste no ícone para acompanhar a suavidade */
+.feature-icon {
+    width: 70px; /* Um pouco maior */
+    height: 70px;
+    border-radius: 50%; /* Totalmente redondo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem auto;
+    font-size: 1.75rem;
+    transition: transform 0.3s ease;
 }

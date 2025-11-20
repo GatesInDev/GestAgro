@@ -1,7 +1,59 @@
 ﻿@inherits LayoutComponentBase
 
-<Navbar/>
+<body>
+    <div class="page-wrapper @menuStateCssClass">
 
-<main>
-    @Body
-</main>
+        <aside class="sidebar-area sidebar-menu component-glass shadow-glass">
+
+            <div class="offcanvas-header border-bottom p-3">
+                <h5 class="m-0 text-truncate">AgroGest Brand</h5>
+            </div>
+
+            <div class="offcanvas-body d-flex flex-column p-0 scroll-y-auto">
+                <ul class="navbar-nav flex-grow-1 p-3">
+                    <li class="nav-item">
+                        <NavLink class="nav-link glass-button rounded-3 m-1 p-3 text-nowrap" Match="NavLinkMatch.All" href="">
+                            <i class="bi bi-house-door-fill me-2"></i> Início
+                        </NavLink>
+                    </li>
+                    <li class="nav-item">
+                        <NavLink class="nav-link glass-button rounded-3 m-1 p-3 text-nowrap overflow-hidden text-truncate" href="register">
+                            <i class="bi bi-person-plus-fill me-2"></i> Registrar-se
+                        </NavLink>
+                    </li>
+                </ul>
+                <div class="mt-auto border-top p-3 text-center small opacity-75">
+                    © 2026
+                </div>
+            </div>
+        </aside>
+
+        <nav class="navbar-area navbar component-glass shadow-glass">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" @onclick="ToggleMenu">
+                    <i class="bi bi-arrow-bar-right"></i>
+                </button>
+            </div>
+        </nav>
+
+        <main class="content-area">
+            <div class="content-card component-glass shadow-glass">
+                <div class="card-body-scroll">
+                    @Body
+                </div>
+            </div>
+        </main>
+
+    </div>
+</body>
+
+@code {
+    private bool isMenuOpen = true;
+
+    private string menuStateCssClass => isMenuOpen ? "menu-is-open" : "menu-is-closed";
+
+    private void ToggleMenu()
+    {
+        isMenuOpen = !isMenuOpen;
+    }
+}
