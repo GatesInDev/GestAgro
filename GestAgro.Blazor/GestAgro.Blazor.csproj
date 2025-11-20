@@ -15,4 +15,8 @@
 		<ProjectReference Include="..\GestAgro.Shared\GestAgro.Shared.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Shared\Components\" />
+	</ItemGroup>
+
 </Project>
